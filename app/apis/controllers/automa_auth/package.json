@@ -1,0 +1,8 @@
+{
+  "type": "module",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "parse-json": "^6.0.2",
+    "puppeteer": "^15.4.1"
+  }
+}
