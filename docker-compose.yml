@@ -18,16 +18,15 @@ services:
         expose:
             - 27017
 
-
-    api:
+    web:
         container_name: api
         build:
             context: .
             dockerfile: dockerfiles/python310/Dockerfile
         depends_on:
           - 'mongo'
-        ports:
-            - 5000:5000
+        expose:
+            - 80
         labels:
             - "traefik.enable=true"
             - "traefik.http.routers.fastapi.rule=Host(`v2202301191442214869.powersrv.de`)"
@@ -37,8 +36,8 @@ services:
     traefik:
         image: traefik:v2.2
         ports:
-            - 8008:80
-            - 8081:8080
+            - 80:80
+            - 443:443
         volumes:
             - "/var/run/docker.sock:/var/run/docker.sock:ro"
             - "./traefik-public-certificates:/certificates"

@@ -20,4 +20,4 @@ COPY . /code/
 EXPOSE 5000
 
 ENTRYPOINT [ "gunicorn", "app.main:app", "--workers", "2", "--worker-class", \
-        "uvicorn.workers.UvicornWorker",  "-b", "0.0.0.0:5000" ]
+        "uvicorn.workers.UvicornWorker",  "-b", "0.0.0.0:80" ]
