@@ -1,7 +1,7 @@
 version: '3'
 services:
 
-    db:
+    mongo:
         image: docker.io/library/mongo:4.4.18
         hostname: api-mongo
         environment:
@@ -22,7 +22,7 @@ services:
             context: .
             dockerfile: dockerfiles/python310/Dockerfile
         depends_on:
-          - 'db'
+          - 'mongo'
         expose:
             - 80
         labels:
