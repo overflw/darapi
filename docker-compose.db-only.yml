@@ -11,20 +11,9 @@ services:
             MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
         restart: on-failure
         volumes:
-            - ./api_db/volumes/mongo:/data/db:z
-            - ./api_db/mongodb.conf:/etc/mongodb.conf:z
-            - ./api_db/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:z
+            - ./api_db/volumes/mongo:/data/db:Z
+            - ./api_db/mongodb.conf:/etc/mongodb.conf:Z
+            - ./api_db/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:Z
         command: --config /etc/mongodb.conf
-        expose:
-            - 27017
-
-
-    api:
-        container_name: api
-        build:
-            context: .
-            dockerfile: dockerfiles/python310/Dockerfile
-        depends_on:
-          - 'mongo'
         ports:
-            - 5000:5000
+            - 27017:27017
