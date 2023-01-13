@@ -93,24 +93,23 @@ class CRUDBase(Generic[CreateSchemaType, UpdateSchemaType, DBSchemaType]):
         *,
         db_doc_id: str,
         obj_in: Union[UpdateSchemaType, Dict[str, Any]]
-    ) -> DBSchemaType:
+    ) -> Optional[DBSchemaType]:
 
         coll = db[self.database_name][self.collection_name]
+        db_doc = await coll.find_one({"_id": ObjectId(db_doc_id)})
         if isinstance(obj_in, dict):
             update_data = obj_in
         else:
             update_data = obj_in.dict(exclude_unset=True)
-
-        db_doc = self.read(coll, db_doc_id)
-        db_doc_data = jsonable_encoder(db_doc)
-
-        for field in db_doc_data:
-            if field in update_data:
-                setattr(db_doc, field, update_data[field])
-
-        result = await coll.replace_one({'_id': db_doc._id}, db_doc)
-        db_doc_updated = await coll.find_one({'_id': db_doc._id})
-        return self.model(**db_doc_updated)
+        if db_doc:
+            updated_db_doc = await coll.update_one(
+                {"_id": ObjectId(db_doc_id)}, {"$set": update_data}
+            )
+            if updated_db_doc:
+                db_doc_updated = await coll.find_one({'_id': ObjectId(db_doc_id)})
+                return self.model(**db_doc_updated)
+            else:
+                return None
 
     async def delete(
         self,

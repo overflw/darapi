@@ -6,12 +6,10 @@ from app.models.rwmodel import RWModel
 from app.models.dbmodel import DateTimeModelMixin, DBModelMixin, PyObjectId
 
 
-
-
 class ItemBase(RWModel):
     controllerId: str = Field(..., alias="controller_id")
-    controllerName: str = Field(..., alias="controller_name")
-    automation: Optional[AutoItemBase] = Field(None)
+    automation: AutoItemBase = Field(...)
+
 
 class Item(DateTimeModelMixin, ItemBase):
     # Add optional created and updated timestamps

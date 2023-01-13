@@ -24,13 +24,12 @@ db.createCollection('controllers');
 db.controllers.insertMany([
     {
         "controller_id": "facebook.com",
-        "controller_name": "Facebook.com",
         "automation": {
             "format": "automa",
             "version": "0.1",
             "definition": {
                 "extVersion": "1.18.1",
-                "name": "Facebook DSAR",
+                "name": "Facebook",
                 "verified": true,
                 "id": "HHT4_mPC6X00mQ8uMQi97",
                 "icon": "riGlobalLine",

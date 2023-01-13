@@ -5,7 +5,6 @@ from pydantic import BaseModel
 from app.models.controllers import *
 from app.crud.controllers import controllers_crud
 from app.db.mongodb import AsyncIOMotorClient, get_database
-from app.apis.controllers.main import *
 from app.models.user import User
 from app.routes.users import get_current_active_user
 
@@ -60,19 +59,31 @@ async def get_item(
 
 
 @router.post(
-    '/{controller_id}',
+    '/',
     response_model=ItemInDB,
     summary="Submit a new item or update an existing",
     description="Submit a new item"
 )
 async def post_item(
-    controller_id: str,
     current_user: User = Depends(get_current_active_user),
     item: ItemBase = Body(...),
     db: AsyncIOMotorClient = Depends(get_database),
-    
+
 ) -> Any:
-    return await handle_post_item(item, controller_id, db)
+    filter_query = {
+        "controller_id": item.controllerId,
+    }
+    # Check whether we have already a controller in db
+    controller_from_db = await controllers_crud.read(db=db, filter=filter_query)
+    if controller_from_db != None:
+        # Update existing item in db
+        controller_from_db = await controllers_crud.update(db=db, db_doc_id=str(controller_from_db.id), obj_in=item)
+
+    else:
+        # Create a new item and submit it to the db
+        controller_from_db = await controllers_crud.create(db=db, doc_in=item)
+
+    return controller_from_db
 
 """
 @router.get(

@@ -5,12 +5,11 @@ from app.models.rwmodel import RWModel
 from app.models.dbmodel import DateTimeModelMixin, DBModelMixin, PyObjectId
 
 
-
-
 class ItemBase(RWModel):
     format: str = Field(...)
     version: str = Field(...)
     definition: dict = Field(...)
+
 
 class Item(DateTimeModelMixin, ItemBase):
     # Add optional created and updated timestamps
