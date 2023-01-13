@@ -119,7 +119,7 @@ class CRUDBase(Generic[CreateSchemaType, UpdateSchemaType, DBSchemaType]):
     ):
 
         coll = db[self.database_name][self.collection_name]
-        db_doc = self.read(coll, db_doc_id)
-        result = await coll.delete({'_id': db_doc._id})
+        db_doc = await coll.find_one({"_id": ObjectId(db_doc_id)})
+        result = await coll.delete_one({'_id': ObjectId(db_doc_id)})
 
         return db_doc

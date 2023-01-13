@@ -85,6 +85,26 @@ async def post_item(
 
     return controller_from_db
 
+
+@router.delete(
+    '/{controller_id}',
+    response_model=ItemInDB,
+    summary="Delete an item",
+    description="Delete an item"
+)
+async def delete_item(
+    controller_id: str,
+    db: AsyncIOMotorClient = Depends(get_database),
+    current_user: User = Depends(get_current_active_user),
+) -> Any:
+    controller_from_db = await controllers_crud.read(db=db, filter={"controller_id": controller_id})
+
+    if controller_from_db != None:
+        return await controllers_crud.delete(db=db, db_doc_id=str(controller_from_db.id))
+    else:
+        raise HTTPException(status_code=404, detail="Controller not found")
+    
+
 """
 @router.get(
     '/{controller_id}/host',

@@ -763,23 +763,22 @@ db.controllers.insertMany([
             "workflow_stats": {
                 "downloads": 10,
                 "executions": 6,
-                "executions-failed": 5,
+                "executions-failed": 5
             }
         },
         "controller_stats": {
             "downloads": 10,
-            "executions": 6,
+            "executions": 6
         },
         "createdAt": "2021-08-05T16:29:17.406Z",
         "updatedAt": "2021-08-05T16:29:17.406Z"
     },
     {
         "controller_id": "google.com",
-        "controller_name": "Google",
         "automation": {
             "definition": {
                 "extVersion": "1.18.1",
-                "name": "Google DSAR",
+                "name": "Google",
                 "id": "HHT4_mtC6X01mQ8uzQi97",
                 "icon": "riGlobalLine",
                 "verified": true,
@@ -1580,7 +1579,7 @@ db.controllers.insertMany([
             "workflow_stats": {
                 "downloads": 10,
                 "executions": 6,
-                "executions-failed": 5,
+                "executions-failed": 5
             }
         },
         "createdAt": "2021-08-05T16:29:17.406Z",
