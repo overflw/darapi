@@ -35,14 +35,13 @@ class CRUDBase(Generic[CreateSchemaType, UpdateSchemaType, DBSchemaType]):
     async def read(
         self,
         db: Any,
-        filter: object = None
+        filter: Any
     ) -> Optional[DBSchemaType]:
 
         coll = db[self.database_name][self.collection_name]
         document = await coll.find_one(filter)
-        if document is None:
-            return None
-        return self.model(**document)
+        if document:
+            return self.model(**document)
 
     async def read_multi(
         self,
