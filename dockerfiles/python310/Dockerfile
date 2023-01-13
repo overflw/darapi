@@ -21,4 +21,4 @@ EXPOSE 80
 
 ENTRYPOINT [ "gunicorn", "app.main:app", "--workers", "2", "--worker-class", \
         "uvicorn.workers.UvicornWorker",  "-b", "0.0.0.0:80", \
-        "--forwarded-allow-ips", "172.24.0.2" ]
+        "--forwarded-allow-ips", "*" ]
