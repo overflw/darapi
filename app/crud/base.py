@@ -35,7 +35,7 @@ class CRUDBase(Generic[CreateSchemaType, UpdateSchemaType, DBSchemaType]):
     async def read(
         self,
         db: Any,
-        filter: Any
+        filter: object = None,
     ) -> Optional[DBSchemaType]:
 
         coll = db[self.database_name][self.collection_name]

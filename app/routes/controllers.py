@@ -53,7 +53,7 @@ async def get_item(
     controller_id: str,
     db: AsyncIOMotorClient = Depends(get_database)
 ) -> Any:
-    output = await controllers_crud.read(db=db, filter={"controller_id": controller_id})
+    output = await controllers_crud.read(db=db, filter={"controllerId": controller_id})
 
     return output
 
@@ -71,7 +71,7 @@ async def post_item(
 
 ) -> Any:
     filter_query = {
-        "controller_id": item.controllerId,
+        "controllerId": item.controllerId,
     }
     # Check whether we have already a controller in db
     controller_from_db = await controllers_crud.read(db=db, filter=filter_query)
@@ -97,7 +97,7 @@ async def delete_item(
     db: AsyncIOMotorClient = Depends(get_database),
     current_user: User = Depends(get_current_active_user),
 ) -> Any:
-    controller_from_db = await controllers_crud.read(db=db, filter={"controller_id": controller_id})
+    controller_from_db = await controllers_crud.read(db=db, filter={"controllerId": controller_id})
 
     if controller_from_db != None:
         return await controllers_crud.delete(db=db, db_doc_id=str(controller_from_db.id))
